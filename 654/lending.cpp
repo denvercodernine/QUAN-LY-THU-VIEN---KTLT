@@ -59,11 +59,11 @@ void issueBook()
 							std::cout << "----- SACH THU " << i + 1 << " -----" << std::endl;
 							printf("Nhap ma so ISBN sach: ");
 							while (getchar() != '\n');
-							gets_s(b.title);
+							gets_s(b.ISBN);
 							int j = 1;
 							while (!feof(f)) {
 								fread(&tempb, sizeof(book)*j, 1, f);
-								if (strcmp(tempb.title, b.title) == 0) {
+								if (strcmp(tempb.ISBN, b.ISBN) == 0) {
 									found = true;
 									printBookInfo(tempb);
 									if (b.count>b.issued)
@@ -131,6 +131,8 @@ void issueBook()
 	}
 
 }
+//INCOMPLETE
+/*
 void returnBook()
 {
 	system("cls");
@@ -176,19 +178,17 @@ void returnBook()
 							FILE *fbs = fopen(bsStr, "rb");
 							bookSlip bs;
 							fread(&bs, sizeof(bookSlip), 1, fbs);
-							for (int i = 0; i < bs.amountBorrowed) {
+							for (int i = 0; i < bs.amountBorrowed, i++;) {
 								//
 								DIR *dir2;
 								struct dirent *ent2;
 								if ((dir2 = opendir(tempStr)) != NULL) {
-									/* print all the files and directories within directory */
 									while ((ent2 = readdir(dir2)) != NULL) {
 										printf("%s\n", ent2->d_name);
 									}
 									closedir(dir2);
 								}
 								else {
-									/* could not open directory */
 									perror("");
 									return;
 								}
@@ -221,3 +221,4 @@ void returnBook()
 		}
 	}
 }
+*/

@@ -1,8 +1,8 @@
+#define _XOPEN_SOURCE 700
 #ifndef PCH_H
 #define PCH_H
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
-#define _XOPEN_SOURCE 700
 #define GENDER_MALE 1
 #define GENDER_FEMALE 0
 #define GENDER_OTHER 2
@@ -11,24 +11,24 @@
 #define PERM_ADMIN 0
 #define PERM_OPERATOR 2
 #define PERM_MANAGER 1
-#define USER_STORAGE "%appdata%\\LIBRARY\\user.bin"
-#define SUBSCRIBER_STORAGE "%appdata%\\LIBRARY\\subscriber.bin"
-#define BOOK_STORAGE "%appdata%\\LIBRARY\\book.bin"
-#define BORROW_LIST "%appdata%\\LIBRARY\\borrow_list.csv"
-#define BORROW_FOLDER "%appdata%\\LIBRARY\\BORROW"
-#define BORROW_FOLDER_C "%appdata%\\LIBRARY\\BORROW\\"
-#define RETURN_FOLDER "%appdata%\\LIBRARY\\RETURN"
-#define APP_DIRECTORY "%appdata%\\LIBRARY"
-#define CREATE_APP_DIRECTORY "mkdir %appdata%\\LIBRARY"
-#define CREATE_BORROW_DIRECTORY "mkdir %appdata%\\LIBRARY\\BORROW"
-#define CREATE_RETURN_DIRECTORY "mkdir %appdata%\\LIBRARY\\RETURN"
-#define USERNAME_LENGTH 32
-#define PASSWORD_LENGTH 32
-#define NAME_LENGTH 32
-#define CMND_LENGTH 12
-#define EMAIL_LENGTH 64
-#define ADDRESS_LENGTH 64
-#define MEMBER_ID_LENGTH 8
+#define USER_STORAGE "user.bin"
+#define SUBSCRIBER_STORAGE "subscriber.bin"
+#define BOOK_STORAGE "book.bin"
+#define BORROW_LIST "borrow_list.csv"
+#define BORROW_FOLDER "BORROW"
+#define BORROW_FOLDER_C "BORROW\\"
+#define RETURN_FOLDER "RETURN\\"
+//#define APP_DIRECTORY "%appdata%\\LIBRARY"
+//#define CREATE_APP_DIRECTORY "mkdir %appdata%\\LIBRARY"
+//#define CREATE_BORROW_DIRECTORY "mkdir %appdata%\\LIBRARY\\BORROW"
+//#define CREATE_RETURN_DIRECTORY "mkdir %appdata%\\LIBRARY\\RETURN"
+#define USERNAME_LENGTH 32+1
+#define PASSWORD_LENGTH 32+1
+#define NAME_LENGTH 32+1
+#define CMND_LENGTH 12+1
+#define EMAIL_LENGTH 64+1
+#define ADDRESS_LENGTH 64+1
+#define MEMBER_ID_LENGTH 8+1
 #define SLASH "\\"
 #define BIN ".bin"
 #define pause system("PAUSE")
@@ -36,7 +36,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
-#include "time.h"
+#include <time.h>
 #include <iostream>
 #include <sstream>
 #include <iomanip>
@@ -45,9 +45,11 @@
 #include <tchar.h>
 #include "dirent.h"
 #include <Windows.h>
+
 extern "C" char* strptime(const char* s,
 	const char* f,
 	struct tm* tm);
+
 struct person
 {
 	char name[NAME_LENGTH];
@@ -71,7 +73,7 @@ struct subscriber {
 	tm expiryDate;
 };
 struct book {
-	char ISBN[13];
+	char ISBN[14];
 	char title[60];
 	char author[60];
 	char publisher[60];
@@ -97,6 +99,9 @@ int login(user &user);
 int authenticate(user &currentUser, char *username, char *password);
 //USER
 void userRegister();
+void changePassword(user &u);
+void updateUserInfo(user &u);
+void changePermissions();
 void initPerson(person &initTarget);
 void initUser(user &initTarget);
 //SUBSCRIBER
@@ -116,4 +121,23 @@ void addBook();
 void deleteBook();
 void updateBookInfo();
 void printBookInfo(book b);
+//INTERFACE
+void menu(user &currentUser);
+void funcUserLimited(user &currentUser);
+void funcUser(user &currentUser);
+void funcSubscriber(user &currentUser);
+void funcSubscriberLimited(user &currentUser);
+void funcBook(user &currentUser);
+void funcBookLimited(user &currentUser);
+void funcLending(user &currentUser);
+void funcReport(user &currentUser);
+void funcReportLimited(user &currentUser);
+//LENDING
+void issueBook();
+//STATISTIC
+void numofbook();
+void numofbook_gerne();
+void numofsubscriber();
+void numofsubs_gender();
+void Numofbook_lend();
 #endif

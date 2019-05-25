@@ -34,7 +34,6 @@ int login(user &user){
 	switch (authenticate(user, username, password))
 	{
 		case 1:
-			std::cout << "test 1" << std::endl;
 			return 1;
 			break;
 		default: // failed to login

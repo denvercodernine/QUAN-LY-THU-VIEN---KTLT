@@ -41,7 +41,7 @@ void addsubscriber()
 		subscriber s, temps;
 		while (getchar() != '\n');
 		FILE *f = fopen(SUBSCRIBER_STORAGE, "wb");
-		printf("Ma doc gia                 : ");
+		std::cout << "Ma doc gia (toi da " << MEMBER_ID_LENGTH - 1 << " ki tu): " << std::endl;
 		gets_s(s.memberID);
 		int i = 1;
 		struct stat st;
@@ -58,31 +58,36 @@ void addsubscriber()
 				i++;
 			}
 		}
-		printf("Ho ten                     : ");
+		std::cout << "Ho ten (toi da " << NAME_LENGTH - 1 << " ki tu): " << std::endl;
 		gets_s(s.info.name);
-		printf("So cmnd                    : ");
+		std::cout << "So cmnd (toi da " << CMND_LENGTH - 1 << " ki tu): " << std::endl;
 		gets_s(s.info.cmnd);
 		printf("Ngay sinh (dd/mm/yyyy)     : ");
-		char dateBuffer[10];
+		char dateBuffer[11];
 		gets_s(dateBuffer);
 		strptime(dateBuffer, "%d/%m/%Y", &s.info.dateOfBirth);
 		printf("Gioi tinh(Nam: 1 / Nu: 0)    : ");
 		scanf("%d", &s.info.gender);
 		while (getchar() != '\n');
-		printf("Email                      : ");
+		std::cout << "Email (toi da " << EMAIL_LENGTH - 1 << " ki tu): " << std::endl;
 		gets_s(s.info.email);
-		printf("Dia chi                    : ");
+		std::cout << "Dia chi (toi da " << ADDRESS_LENGTH - 1 << " ki tu): " << std::endl;
 		gets_s(s.info.address);
 		printf("Ngay lap the (dd/mm/yyyy)  : ");
 		gets_s(dateBuffer);
 		strptime(dateBuffer, "%d/%m/%Y", &s.startDate);
 		s.expiryDate = s.startDate;
 		s.expiryDate.tm_year = s.expiryDate.tm_year + 2;
-		FILE *fm = fopen(SUBSCRIBER_STORAGE, "a+b");
+		fclose(f);
+		FILE *fm = fopen(SUBSCRIBER_STORAGE, "rb+");
 		fseek(fm, 0, SEEK_END);
 		fwrite(&s, sizeof(subscriber), 1, fm);
 		printf("Dang ky thanh cong!\n");
-		fclose(f);
+		fclose(fm);
+		std::cout << "An Y de thuc hien lai hoac an phim khac de tro ve." << std::endl;
+		if (_getch() != 'y') {
+			return;
+		}
 	}
 }
 void deletesubscriber()
@@ -118,6 +123,7 @@ void deletesubscriber()
 			continue;
 		}
 		printSubscriberInfo(s);
+		/*
 		bookSlip bi;
 		FILE *f = fopen("borrowList.csv", "r+t");
 		while (!feof(f))
@@ -131,6 +137,7 @@ void deletesubscriber()
 				}
 			fscanf(f, "%*[^\n]\n", NULL);
 		}
+		*/
 		printf("Bam 'y' de xac nhan xoa, bam phim khac bat ki de huy!\n");
 		if (_getch() == 'y') {
 			strcpy(s.memberID, "");
@@ -174,8 +181,9 @@ void updatesubscriberInfo()
 		if (!found) {
 			fclose(f);
 			std::cout << "Khong tim thay doc gia! An Y de tim lai hoac an phim khac de tro ve." << std::endl;
-			if (_getch() != 'y')
+			if (_getch() != 'y') {
 				return;
+			}
 			continue;
 		}
 		printSubscriberInfo(s);
@@ -184,7 +192,7 @@ void updatesubscriberInfo()
 		printf("So cmnd moi                : ");
 		gets_s(s.info.cmnd);
 		printf("Ngay sinh (dd/mm/yyyy)     : ");
-		char dateBuffer[10];
+		char dateBuffer[11];
 		gets_s(dateBuffer);
 		strptime(dateBuffer, "%d/%m/%Y", &s.info.dateOfBirth);
 		printf("Gioi tinh (Nam: 1 / Nu: 0)    : ");
@@ -195,7 +203,7 @@ void updatesubscriberInfo()
 		printf("Dia chi moi                : ");
 		gets_s(s.info.address);
 		printf("Bam 'y' de xac nhan cap nhat, bam phim bat ky khac de huy!\n");
-		if (getch() == 'y')
+		if (_getch() == 'y')
 		{
 			fseek(f, -(int)sizeof(subscriber), SEEK_CUR);
 			fwrite(&s, sizeof(subscriber), 1, f);
@@ -295,7 +303,7 @@ void printSubscriberInfo(subscriber s) {
 	puts(s.memberID);
 	printPersonInfo(s.info);
 	printf("Ngay dang ki            :");
-	char timeBuffer[10];
+	char timeBuffer[11];
 	strftime(timeBuffer, 10, "%d/%m/%Y", &s.startDate);
 	puts(timeBuffer);
 	printf("Ngay het han            :");
@@ -314,7 +322,7 @@ void printPersonInfo(person p) {
 	printf("CMND                    :");
 	puts(p.cmnd);
 	printf("Ngay thang nam sinh     :");
-	char timeBuffer[10];
+	char timeBuffer[11];
 	strftime(timeBuffer, 10, "%d/%m/%Y", &p.dateOfBirth);
 	puts(timeBuffer);
 }
