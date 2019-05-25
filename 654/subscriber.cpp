@@ -39,7 +39,7 @@ void addsubscriber()
 	while (1) {
 		system("cls");
 		subscriber s, temps;
-		fflush(stdin);
+		while (getchar() != '\n');
 		FILE *f = fopen(SUBSCRIBER_STORAGE, "wb");
 		printf("Ma doc gia                 : ");
 		gets_s(s.memberID);
@@ -97,7 +97,7 @@ void deletesubscriber()
 	subscriber s, temps;
 	while (1) {
 		printf("Nhap ma doc gia: ");
-		fflush(stdin);
+		while (getchar() != '\n');
 		gets_s(s.memberID);
 		int i = 1; bool found = false;
 		while (!feof(f)) {
@@ -156,7 +156,7 @@ void updatesubscriberInfo()
 	subscriber s,temps;
 	while(1) {
 		printf("Nhap ma doc gia: ");
-		fflush(stdin);
+		while (getchar() != '\n');
 		gets_s(s.memberID);
 		int i = 1; bool found = false;
 		struct stat st;
@@ -173,7 +173,7 @@ void updatesubscriberInfo()
 		}
 		if (!found) {
 			fclose(f);
-			std::cout << "Khong tim thay sach! An Y de tim lai hoac an phim khac de tro ve." << std::endl;
+			std::cout << "Khong tim thay doc gia! An Y de tim lai hoac an phim khac de tro ve." << std::endl;
 			if (_getch() != 'y')
 				return;
 			continue;

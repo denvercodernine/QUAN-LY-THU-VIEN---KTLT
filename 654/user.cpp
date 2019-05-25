@@ -4,7 +4,7 @@ void userRegister() {
 	system("CLS");
 	user u; initUser(u);
 	char tempPass[PASSWORD_LENGTH];
-	fflush(stdin);
+	while (getchar() != '\n');
 	std::cout << "Nhap username: " ;
 	getUsername(u.username);
 	std::cout << "Nhap password: ";
@@ -29,7 +29,7 @@ void changePassword(user &u)
 	user tempUser; initUser(tempUser);
 	system("cls");
 	char a[PASSWORD_LENGTH];
-	fflush(stdin);
+	while (getchar() != '\n');
 	printf("Nhap mat khau hien tai: ");
 	getPassword(a);
 	if (!strcmp(a, u.password))
@@ -86,7 +86,7 @@ void updateUserInfo(user &u) {
 	while (1)
 	{
 		char a[30];
-		fflush(stdin);
+		while (getchar() != '\n');
 		printf("Nhap mat khau xac nhan             : ");
 		gets_s(a);
 		if (strcmp(a, u.password)==0)

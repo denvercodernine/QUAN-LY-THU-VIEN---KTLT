@@ -61,7 +61,7 @@ void searchBook()
 		else if (choose == 2)
 		{
 			printf("Nhap ten sach: ");
-			fflush(stdin);
+			while (getchar() != '\n');
 			gets_s(b.title);
 			int i = 1;
 			while (!feof(f)) {
@@ -93,7 +93,7 @@ void addBook()
 		system("cls");
 		FILE *f = fopen(BOOK_STORAGE, "wb");
 		book b, tempb;
-		fflush(stdin);
+		while (getchar() != '\n');
 		printf("Ma so sach       : ");
 		gets_s(b.ISBN);
 		int i = 1;
@@ -150,7 +150,7 @@ void deleteBook()
 	}
 	while (1) {
 		printf("Nhap ma so sach: ");
-		fflush(stdin);
+		while (getchar() != '\n');
 		gets_s(b.ISBN);
 		int i = 1; bool found = false;
 		while (!feof(f)) {
@@ -199,7 +199,7 @@ void updateBookInfo()
 	}
 	while (1) {
 		printf("Nhap ma so sach: ");
-		fflush(stdin);
+		while (getchar() != '\n');
 		gets_s(b.ISBN);
 		int i = 1; bool found = false;
 		while (!feof(f)) {
@@ -227,7 +227,7 @@ void updateBookInfo()
 		gets_s(b.publisher);
 		printf("Cap nhat nam xuat ban : ");
 		scanf("%d", &b.year);
-		fflush(stdin);
+		while (getchar() != '\n');
 		printf("Cap nhat the loai     : ");
 		gets_s(b.gerne);
 		printf("Cap nhat so luong     : ");

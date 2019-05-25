@@ -11,9 +11,17 @@
 #define PERM_ADMIN 0
 #define PERM_OPERATOR 2
 #define PERM_MANAGER 1
-#define USER_STORAGE "user.bin"
-#define SUBSCRIBER_STORAGE "subscriber.bin"
-#define BOOK_STORAGE "book.bin"
+#define USER_STORAGE "%appdata%\\LIBRARY\\user.bin"
+#define SUBSCRIBER_STORAGE "%appdata%\\LIBRARY\\subscriber.bin"
+#define BOOK_STORAGE "%appdata%\\LIBRARY\\book.bin"
+#define BORROW_LIST "%appdata%\\LIBRARY\\borrow_list.csv"
+#define BORROW_FOLDER "%appdata%\\LIBRARY\\BORROW"
+#define BORROW_FOLDER_C "%appdata%\\LIBRARY\\BORROW\\"
+#define RETURN_FOLDER "%appdata%\\LIBRARY\\RETURN"
+#define APP_DIRECTORY "%appdata%\\LIBRARY"
+#define CREATE_APP_DIRECTORY "mkdir %appdata%\\LIBRARY"
+#define CREATE_BORROW_DIRECTORY "mkdir %appdata%\\LIBRARY\\BORROW"
+#define CREATE_RETURN_DIRECTORY "mkdir %appdata%\\LIBRARY\\RETURN"
 #define USERNAME_LENGTH 32
 #define PASSWORD_LENGTH 32
 #define NAME_LENGTH 32
@@ -21,6 +29,8 @@
 #define EMAIL_LENGTH 64
 #define ADDRESS_LENGTH 64
 #define MEMBER_ID_LENGTH 8
+#define SLASH "\\"
+#define BIN ".bin"
 #define pause system("PAUSE")
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,7 +41,10 @@
 #include <sstream>
 #include <iomanip>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <tchar.h>
+#include "dirent.h"
+#include <Windows.h>
 extern "C" char* strptime(const char* s,
 	const char* f,
 	struct tm* tm);
@@ -69,24 +82,34 @@ struct book {
 	unsigned int issued;
 };
 struct bookSlip {
-	bool returned;
-	char memberID[MEMBER_ID_LENGTH];
+	//bool returned;
+	//char memberID[MEMBER_ID_LENGTH];
 	unsigned int amountBorrowed;
 	tm issue;
-	tm due;
-	tm returnDate;
-	char ** list;
+	//tm due;
+	//tm returnDate;
+	//char ** list;
 };
-//
+//LOGIN
 void getPassword(char *pw);
 void getUsername(char *user);
 int login(user &user);
 int authenticate(user &currentUser, char *username, char *password);
-//
+//USER
 void userRegister();
 void initPerson(person &initTarget);
 void initUser(user &initTarget);
-//
+//SUBSCRIBER
+int LastChar(char c);
+char *readString(FILE *f, char *line);
+void subscriberList();
+void addsubscriber();
+void deletesubscriber();
+void updatesubscriberInfo();
+void searchsubscriber();
+void printSubscriberInfo(subscriber s);
+void printPersonInfo(person p);
+//BOOK
 void bookList();
 void searchBook();
 void addBook();
